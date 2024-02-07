@@ -13,9 +13,17 @@
                 <MenuItem x:Name="MenuQuit" Header="_Quit" Click="MenuQuit_Click"/>
             </MenuItem>
             <MenuItem Header="_NPOI test">
-                <MenuItem x:Name="MenuCreateHelloWorld" Header="produce 'Hello World'" Click="MenuCreateHelloWorld_Click" />
-                <MenuItem x:Name="MenuReadHelloWorld" Header="read 'Hello World'" Click="MenuReadHelloWorld_Click" />
+                <MenuItem x:Name="MenuCreateHelloWorld" Header="1. produce 'Hello World'" Click="MenuCreateHelloWorld_Click" />
+                <MenuItem x:Name="MenuReadHelloWorld" Header="2. read 'Hello World'" Click="MenuReadHelloWorld_Click" />
                 <Separator/>
+                <MenuItem x:Name="MenuCreateDoubleLnoHeader" Header="1. produce 'ExcelDataRowList':double" Click="MenuCreateDoubleLnoHeader_Click"/>
+                <MenuItem x:Name="MenuReadDoubleList" Header="2. read 'ExcelDataRowList':double" Click="MenuReadDoubleList_Click" />
+                <MenuItem x:Name="MenuReadAndAddHeader" Header="3. read and store with header as second table" Click="MenuReadAndAddHeader_Click" />
+                <MenuItem x:Name="MenuReadDoubleListHeader" Header="4. read the list with header" Click="MenuReadDoubleListHeader_Click" />
+                <MenuItem x:Name="MenuChangeHeaderDL" Header="5. change the header" Click="MenuChangeHeaderDL_Click" />
+                <Separator/>
+                <MenuItem x:Name="MenuCreateMixedList" Header="1. produce 'ExcelDataRow'" Click="MenuCreateMixedList_Click" />
+                <MenuItem x:Name="MenuReadMixedList" Header="2. read 'ExcelDataRow'" Click="MenuReadMixedList_Click" />
             </MenuItem>
         </Menu>
         <ScrollViewer x:Name="textScroll" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top" Margin="10">

@@ -25,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NPOI.SS.UserModel;
 using NPOIwrap;
 
 namespace WPFwithNPOI
@@ -45,7 +46,12 @@ namespace WPFwithNPOI
         {
             InitializeComponent();
 
-            Display( "Init ... ok" );
+            Display( "Init ... ok\n" );
+            string message = "This is the demoprogram for NPOIwrap.\n"
+                + "Please try the menupoints in their order.\n"
+                + "Every change can be seen in Excel if you are interested.\n"
+                + "But you have to close the file in Excel before you can write it here!\n";
+            Display( message );
 
         }   // end: public MainWindow
 
@@ -123,16 +129,138 @@ namespace WPFwithNPOI
         private void MenuCreateHelloWorld_Click( object sender, RoutedEventArgs e )
         {
             excel.CreateHelloWorld();
-            Display( $"created the Excel file with name {excel.fileName}." );
+            Display( $"created the Excel file with name {excel.fileName}.\n" );
 
         }   // end: MenuCreateHelloWorld_Click
 
         private void MenuReadHelloWorld_Click( object sender, RoutedEventArgs e )
         {
             excel.ReadHelloWorld();
-            Display( excel.DataListString_ToString() );
+            string message = "Reading the 'Hello World'-example:\n";
+            Display( message + excel.DataListString_ToString() );
 
         }   // end: MenuReadHelloWorld_Click
+
+        private void MenuCreateDoubleLnoHeader_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListDouble" + myExcel.fileEnding;
+            string message = $"creating a new file ( {testName} ) for this.\n" +
+                "A number of rows with doubles and no header...\n";
+            Display( message );
+            myExcel.CreateWorkbook();
+            for ( int i = 0; i < 10; i++ )
+            {   // add some data to be seen
+                ExcelDataRowList newRow = new ExcelDataRowList( CellType.Numeric );
+                for ( int j = 0; j < 10; j++ )
+                { 
+                    double result = i + 0.1 * j;
+                    newRow.cellData.Add( result );
+
+                }
+                myExcel.dataListDouble.Add( newRow );
+
+            }
+            myExcel.CreateSheetFromListDouble( 0, "list of numeric cells" );
+            myExcel.SaveWorkbook( testName, true );
+
+        }   // end: MenuCreateDoubleLnoHeader_Click
+
+        private void MenuReadDoubleList_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListDouble" + myExcel.fileEnding;
+            string message = "reading the example file without header row:\n";
+            myExcel.ReadWorkbook( testName, true );
+            myExcel.ReadSheets();
+            myExcel.ReadSheetAsListDouble( 0 );
+            Display( message + myExcel.DataListDouble_ToString() );
+
+        }   // end: MenuReadDoubleList_Click
+
+        private void MenuReadAndAddHeader_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListDouble" + myExcel.fileEnding;
+            string message = "reading the example file without header row ...\n"
+                + "and adding an empty header row to it.\n"
+                + "this will be table 1\n";
+            Display( message );
+            myExcel.ReadWorkbook( testName, true );
+            myExcel.ReadSheets();
+            myExcel.ReadSheetAsListDouble( 0 );
+            myExcel.CreateSheetFromListDouble( 1, "double list cells with header", true );
+            myExcel.SaveWorkbook( testName, true );
+
+        }   // end: MenuReadAndAddHeader_Click
+
+        private void MenuReadDoubleListHeader_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListDouble" + myExcel.fileEnding;
+            string message = "reading the example file with header row:\n";
+            myExcel.ReadWorkbook( testName, true );
+            myExcel.ReadSheets();
+            myExcel.ReadSheetAsListDouble( 1, true );
+            Display( message + myExcel.DataListDouble_ToString( 1, true ) );
+
+
+        }
+
+        private void MenuChangeHeaderDL_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListDouble" + myExcel.fileEnding;
+            string message = "changing the header and reloading...\n";
+            myExcel.ReadWorkbook( testName, true );
+            myExcel.ReadSheets();
+            string[] heads = new string[] 
+                { "is Mickey Mouse", "looking like", "Elvis",
+                    "?", "YEAH", "while golfing..." };
+            myExcel.ChangeHeader( 1, heads );
+            // reread the file after changing the header
+            myExcel.ReadWorkbook( testName, true );
+            myExcel.ReadSheets();
+            myExcel.ReadSheetAsListDouble( 1, true );
+            Display( myExcel.DataListDouble_ToString( 1, true ) );
+
+        }   // end: MenuChangeHeaderDL_Click
+
+        private void MenuCreateMixedList_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListMixed" + myExcel.fileEnding;
+            string message = $"creating a new file ( {testName} ) for this.\n" +
+                "A number of rows with special data and no header...\n";
+            Display( message );
+            myExcel.CreateWorkbook();
+            for ( int i = 0; i < 10; i++ )
+            {   // add some data to be seen
+                ExcelDataRow newRow = new ExcelDataRow();
+                newRow.exampleIntNumber = i;
+                newRow.exampleDoubleNumber = i * 1.1;
+                newRow.exampleText = $"example number {i}";
+                myExcel.dataListMixed.Add( newRow );
+
+            }
+            myExcel.CreateSheetFromListMixed( 0, "list of mixed cells" );
+            myExcel.SaveWorkbook( testName, true );
+
+        }   // end: MenuCreateMixedList_Click
+
+        private void MenuReadMixedList_Click( object sender, RoutedEventArgs e )
+        {
+            NPOIexcel myExcel = new NPOIexcel();
+            string testName = @"RowListMixed" + myExcel.fileEnding;
+            string message = $"reading the file ( {testName} ) for this.\n" +
+                "A number of rows with special data and no header...\n";
+            Display( message );
+            myExcel.ReadWorkbook( testName, true );
+            myExcel.ReadSheets();
+            myExcel.ReadSheetAsListMixed( 0 );
+            Display( myExcel.DataListMixed_ToString() );
+
+        }   // end: MenuReadMixedList_Click
 
     }   // end: class MainWindow
 
