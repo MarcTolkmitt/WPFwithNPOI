@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NPOI" Version="2.6.2" />
+    <PackageReference Include="helper-NPOIwrap-use-Excel-xlsx" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -38,17 +38,21 @@ namespace WPFwithNPOI
         // variables
         string fileName = @"Excel-Test.xlsx";
         NPOIexcel excel = new NPOIexcel();
-
         /// <summary>
-        /// standardconstructor
+        /// created on: 06.02.24
+        /// last edit: 07.10.24
+        /// </summary>
+        public Version version = new Version( "1.0.2");
+        /// <summary>
+        /// standard constructor
         /// </summary>
         public MainWindow( )
         {
             InitializeComponent();
 
-            Display( "Init ... ok\n" );
-            string message = "This is the demoprogram for NPOIwrap.\n"
-                + "Please try the menupoints in their order.\n"
+            Display( "Init ... OK\n" );
+            string message = "This is the demo program for NPOIwrap.\n"
+                + "Please try the menu points in their order.\n"
                 + "Every change can be seen in Excel if you are interested.\n"
                 + "But you have to close the file in Excel before you can write it here!\n";
             Display( message );
@@ -56,7 +60,7 @@ namespace WPFwithNPOI
         }   // end: public MainWindow
 
         /// <summary>
-        /// handlerfunction -> Window_Closing
+        /// handler function -> Window_Closing
         /// </summary>
         /// <param name="sender">triggering UI-element</param>
         /// <param name="e">send parameter from it</param>
@@ -66,8 +70,8 @@ namespace WPFwithNPOI
         }   // end: private void Window_Closing
 
         /// <summary>
-        /// handlerfunction -> MenuItem
-        /// used for exitroutines
+        /// handler function -> MenuItem
+        /// used for exit routines
         /// </summary>
         /// <param name="sender">triggering UI-element</param>
         /// <param name="e">send parameter from it</param>
@@ -79,10 +83,10 @@ namespace WPFwithNPOI
 
 
 
-        // ---------------------------------------------     helperfunctions
+        // ---------------------------------------------     helper functions
 
         /// <summary>
-        /// helperfunction, writing arraydata into a string
+        /// helper function, writing array data into a string
         /// </summary>
         /// <param name="data">2d ragged array </param>
         /// <returns>the data as string</returns>
@@ -103,9 +107,9 @@ namespace WPFwithNPOI
         }   // end: ArrayToString
 
         /// <summary>
-        /// helperfunction to write the text into the mainwindow
+        /// helper function to write the text into the 'MainWindow'
         /// </summary>
-        /// <param name="text">inputstring</param>
+        /// <param name="text">input string</param>
         public void Display( string? text )
         {
             if ( !string.IsNullOrEmpty( text ) )
@@ -115,9 +119,9 @@ namespace WPFwithNPOI
         }   // end: Display
 
         /// <summary>
-        /// helperfunction to write the text into the mainwindow
+        /// helper function to write the text into the 'MainWindow'
         /// </summary>
-        /// <param name="text">any-objekt-variant</param>
+        /// <param name="text">any-object-variant</param>
         private void Display( int obj )
         {
             Display( obj.ToString() );
