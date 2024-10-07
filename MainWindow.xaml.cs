@@ -15,6 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
+
+// Ignore Spelling: Fwith
+
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -155,7 +158,7 @@ namespace WPFwithNPOI
             myExcel.CreateWorkbook();
             for ( int i = 0; i < 10; i++ )
             {   // add some data to be seen
-                ExcelDataRowList newRow = new ExcelDataRowList( CellType.Numeric );
+                ExcelDataRowListDouble newRow = new ExcelDataRowListDouble();
                 for ( int j = 0; j < 10; j++ )
                 { 
                     double result = i + 0.1 * j;
@@ -179,6 +182,8 @@ namespace WPFwithNPOI
             myExcel.ReadSheets();
             myExcel.ReadSheetAsListDouble( 0 );
             Display( message + myExcel.DataListDouble_ToString() );
+            var doubles = myExcel.DataListDoubleAsArrayJagged();
+            Display( $"the double[][]: \n" +ArrayToString( doubles ) );
 
         }   // end: MenuReadDoubleList_Click
 
@@ -216,6 +221,7 @@ namespace WPFwithNPOI
             NPOIexcel myExcel = new NPOIexcel();
             string testName = @"RowListDouble" + myExcel.fileEnding;
             string message = "changing the header and reloading...\n";
+            Display( message );
             myExcel.ReadWorkbook( testName, true );
             myExcel.ReadSheets();
             string[] heads = new string[] 
